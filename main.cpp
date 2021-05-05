@@ -82,10 +82,10 @@ bool checkingCorrect(std::string str){
 int main() {
     std::cout << "---Checking the correctness of the email address---" << std::endl;
 
-    std::string strAddress = "simple@example.com";
+    std::string strAddress;
 
-    //std::cout << "Enter the email address to check for correctness" << std::endl;
-    //std::cin >> strAddress;
+    std::cout << "Enter the email address to check for correctness" << std::endl;
+    std::cin >> strAddress;
 
     if(checkingCorrect(strAddress)){
         std::cout << "Yes!" << std::endl;
