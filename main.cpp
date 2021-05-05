@@ -86,6 +86,7 @@ bool checkingCorrect(std::string str){
 
 int main() {
     std::cout << "---Checking the correctness of the email address---" << std::endl;
+    std::cout << "---Checking the correctness of the email address---" << std::endl;
 
     std::string strAddress;
 
