@@ -12,7 +12,7 @@ int findFirstMatchRight(std::string str, char ch){
 
 //method find two consecutive occurrences of a character in string
 bool findTwoMatchRow(std::string str, char ch){
-    for(int i = 0; i < str.length(); i++){
+    for(int i = 0; i < str.length() - 1; i++){
         if(ch == str[i] && ch == str[i + 1]){
             return false;
         }
@@ -30,21 +30,18 @@ std::string substr(std::string str, int startIndex, int endIndex){
 }
 
 //check the string length
-bool checkLength(std::string str){
-    if(str.size() < 1 || str.size() > 64){
-        return false;
-    }
-    return true;
+bool checkLength(std::string str, int start, int end){
+    return str.size() >= start && str.size() <= end;
 }
 
 //check the string for valid characters
-bool checkValidity(std::string strOne, std::string strTwo){
+bool checkValidity(std::string str, std::string strChar){
     bool temp = true;
 
-    for(int i = 0; i < strOne.length(); i++){
+    for(char i : str){
         if(temp){
-            for(int n = 0; n < strTwo.length(); n++){
-                if(!((strOne[i] == strTwo[n] || strOne[i] >= '0' && strOne[i] <= '9' || strOne[i] >= 'A' && strOne[i] <= 'Z' || strOne[i] >= 'a') && (strOne[i] <= 'z'))){
+            for(char n : strChar){
+                if(!(i == n || (i >= '0' && i <= '9') || (i >= 'A' && i <= 'Z') || (i >= 'a' && i <= 'z'))){
                     temp = false;
                 }else{
                     temp = true;
@@ -62,20 +59,18 @@ bool checkValidity(std::string strOne, std::string strTwo){
 //check the address for correctness
 bool checkingCorrect(std::string str){
 
-    int indexLast;
+    int indexLast = findFirstMatchRight(str, '@');
 
-    if(findFirstMatchRight(str, '@') != -1){
-        indexLast = findFirstMatchRight(str, '@');
-    }else {
+    if(indexLast == -1){
         return false;
     }
 
     std::string strLeft = substr(str, 0, indexLast);
-    std::string strRight = substr(str, indexLast, str.length());
+    std::string strRight = substr(str, indexLast + 1, str.length());
 
     if(!findTwoMatchRow(str, '.')){
         return false;
-    }else if(!(checkLength(strLeft) && checkLength(strRight))){
+    }else if(!(checkLength(strLeft, 1, 64) && checkLength(strRight, 1, 63))){
         return false;
     }else if(!(checkValidity(strLeft, "!#$%&'*+-/=?^_`{|}~.") && checkValidity(strRight, "-."))){
         return false;
@@ -86,12 +81,11 @@ bool checkingCorrect(std::string str){
 
 int main() {
     std::cout << "---Checking the correctness of the email address---" << std::endl;
-    std::cout << "---Checking the correctness of the email address---" << std::endl;
 
-    std::string strAddress;
+    std::string strAddress = "simple@example.com";
 
-    std::cout << "Enter the email address to check for correctness" << std::endl;
-    std::cin >> strAddress;
+    //std::cout << "Enter the email address to check for correctness" << std::endl;
+    //std::cin >> strAddress;
 
     if(checkingCorrect(strAddress)){
         std::cout << "Yes!" << std::endl;
